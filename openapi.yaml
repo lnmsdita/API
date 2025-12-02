@@ -1,0 +1,179 @@
+openapi: 3.0.1
+info:
+  title: Customer CRUD API
+  version: 1.0.0
+  description: >
+    RESTful API for CRUD operations with JWT authentication and role-based access.
+    Includes restricted access for test users.
+
+servers:
+  - url: https://api.example.com/api/v1
+
+paths:
+  /auth/login:
+    post:
+      summary: Login to generate JWT token
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: JWT Token generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  expires_in:
+                    type: integer
+        "401":
+          description: Invalid credentials
+
+  /customers:
+    get:
+      summary: Get all customers
+      tags: [Customer]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+
+    post:
+      summary: Create a new customer
+      tags: [Customer]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerInput"
+      responses:
+        "201":
+          description: Customer created
+        "403":
+          description: Forbidden for non-admin/test users
+
+  /customers/{id}:
+    get:
+      summary: Get customer by ID
+      tags: [Customer]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Customer details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        "404":
+          description: Customer not found
+
+    put:
+      summary: Update customer
+      tags: [Customer]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerInput"
+      responses:
+        "200":
+          description: Customer updated
+        "403":
+          description: Forbidden for roles without update permissions
+        "404":
+          description: Customer not found
+
+    delete:
+      summary: Delete customer by ID
+      tags: [Customer]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Customer deleted
+        "403":
+          description: Only admin role allowed
+        "404":
+          description: Customer not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          example: c12345
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: john@example.com
+        phone:
+          type: string
+          example: +628123456789
+        created_at:
+          type: string
+          format: date-time
+          example: 2024-01-20T09:00:00Z
+
+    CustomerInput:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
