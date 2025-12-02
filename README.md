@@ -22,7 +22,7 @@ Berikut langkah paling cepat dan praktis untuk menjalankan API menggunakan Postm
 1. Buka Postman  
 2. Klik **Import**  
 3. Pilih tab **Raw Text**  
-4. Copy dan paste seluruh isi `swagger.yaml`  
+4. Copy dan paste seluruh isi `openapi.yaml`  
 5. Klik **Continue → Import**
 
 Postman akan otomatis membuat **collection lengkap** dengan semua endpoint.
