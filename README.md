@@ -1,4 +1,4 @@
-# Customer CRUD API (Swagger + Postman Guide)
+# Customer CRUD API (Postman Guide)
 
 Repository ini berisi file **OpenAPI (Swagger)** untuk Customer CRUD API dengan fitur:
 
