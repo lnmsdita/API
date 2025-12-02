@@ -1,6 +1,6 @@
 # Customer CRUD API (Postman Guide)
 
-Repository ini berisi file **OpenAPI (Swagger)** untuk Customer CRUD API dengan fitur:
+Repository ini berisi file **OpenAPI** untuk Customer CRUD API dengan fitur:
 
 - CRUD Endpoint  
 - JWT Authentication  
@@ -9,7 +9,6 @@ Repository ini berisi file **OpenAPI (Swagger)** untuk Customer CRUD API dengan 
 
 Dokumentasi API berada pada file:  
 
----
 
 # Cara Menjalankan API di Postman
 
@@ -17,7 +16,7 @@ Berikut langkah paling cepat dan praktis untuk menjalankan API menggunakan Postm
 
 ---
 
-## Import Swagger ke Postman
+## Import openapi.json ke Postman
 
 1. Buka Postman  
 2. Klik **Import**  
